@@ -4,3 +4,6 @@
 
 # Add gitignore for compiled files
 out
+
+# Ignore the lib folder
+lib
