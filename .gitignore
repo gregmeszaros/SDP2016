@@ -1,0 +1,6 @@
+# Add gitignore for IDE project info files
+.idea
+*.iml
+
+# Add gitignore for compiled files
+out
