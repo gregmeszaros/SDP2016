@@ -1,3 +1,6 @@
+# Ignore .DS_Store
+.DS_Store
+
 # Add gitignore for IDE project info files
 .idea
 *.iml
