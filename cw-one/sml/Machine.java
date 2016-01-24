@@ -61,7 +61,6 @@ public class Machine {
 
     // Execute the program in prog, beginning at instruction 0.
     // Precondition: the program and its labels have been store properly.
-
     public void execute() {
         setPc(0);
         setRegisters(new Registers());
