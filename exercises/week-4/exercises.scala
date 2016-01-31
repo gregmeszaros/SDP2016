@@ -1,3 +1,5 @@
+import org.scalatest.Assertions._
+
 object Main extends App {
 
   // Store 17
@@ -45,5 +47,49 @@ object Main extends App {
 
   println("Converted to Fahrenheit: " + F)
 
+  def getSquare(value: Int): Int = {
+    return value * value;
+  }
+
+  val a = getSquare(3);
+
+  println(a);
+  assert(a == 9);
+
+  val b = getSquare(6);
+  assert(b == 36);
+
+  val c = getSquare(5);
+  assert(c == 25);
+
+  def isArg1GreaterThanArg2(val1: Double, val2: Double): Boolean = {
+    return val1 > val2
+  }
+
+  assert(isArg1GreaterThanArg2(4.15, 4.12))
+  val t2 = isArg1GreaterThanArg2(2.1, 1.2)
+
+  assert(t2);
+
+
+  def ManyTimesString(val1: String, val2: Int): String = {
+
+    var a = 0
+    var returnString = ""
+
+    // for loop execution with a range
+    for( a <- 1 to val2){
+      returnString = returnString + val1
+    }
+
+    return returnString
+
+  }
+
+  var m1 = ManyTimesString("abc", 3)
+  var m2 = ManyTimesString("123", 2)
+
+  assert("abcabcabc" == m1, "This strings should equal")
+  assert("123123" == m2, "This strings should equal")
 
 }
