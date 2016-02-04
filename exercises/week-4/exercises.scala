@@ -92,4 +92,60 @@ object Main extends App {
   assert("abcabcabc" == m1, "This strings should equal")
   assert("123123" == m2, "This strings should equal")
 
+  val xRange = 1 to 5
+  println(xRange)
+
+  val xRangeWithStep = 1 to 5 by 2
+  println (xRangeWithStep)
+
+  val s1 : String = "Sally"
+  val s2 : String = "Sally"
+
+  // Test if 2 string are the same
+  if (s1.equals(s2)) {
+    println("s1 and s2 are equal")
+  }
+  else {
+    println("s1 and s2 are NOT equal")
+  }
+
+  class Hippo() {
+  }
+  class Lion() {
+  }
+  class Tiger() {
+  }
+  class Monkey() {
+  }
+  class Giraffe() {
+  }
+
+  // Create different classes
+  var hippo = new Hippo
+  println(hippo)
+
+  var lion = new Lion
+  println(lion)
+
+  var tiger = new Tiger
+  println(tiger)
+
+  var monkey = new Monkey
+  println(monkey)
+
+  var giraffe = new Giraffe
+  println(giraffe)
+
+  // Few more classes
+  var lion2 = new Lion
+  println(lion2)
+
+  // 2 more giraffes
+  var giraffe2 = new Giraffe
+  println(giraffe2)
+
+  var giraffe3 = new Giraffe
+  println(giraffe3)
+
+
 }
