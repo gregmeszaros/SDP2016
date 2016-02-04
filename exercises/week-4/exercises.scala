@@ -147,5 +147,77 @@ object Main extends App {
   var giraffe3 = new Giraffe
   println(giraffe3)
 
+  class Sailboat() {
+
+    def raise(): String = {
+      return "Sails raised"
+    }
+
+    def lower(): String = {
+      return "Sails lowered"
+    }
+
+    // Create Flare object instance and call the light method (returns as String)
+    def signal(): String = {
+      return new Flare().light()
+    }
+
+  }
+
+  var testSail = new Sailboat
+  val r1 = testSail.raise()
+  val r2 = testSail.lower()
+
+  // If they are not equal excpetion will be thrown showing the message below
+  assert(r1 == "Sails raised", "Expected Sails raised, Got " + r1)
+  assert(r2 == "Sails lowered", "Expected Sails lowered, Got " + r2)
+
+  class Motorboat() {
+
+    def on(): String = {
+      return "Motor on"
+    }
+
+    def off(): String = {
+      return "Motor off"
+    }
+
+    // Create Flare object instance and call the light method (returns as String)
+    def signal(): String = {
+      return new Flare().light()
+    }
+
+  }
+
+  val motorboat = new Motorboat
+  val ss1 = motorboat.on()
+  val ss2 = motorboat.off()
+
+  assert(ss1 == "Motor on", "Expected Motor on, Got " + ss1)
+  assert(ss2 == "Motor off", "Expected Motor off, Got " + ss2)
+
+  class Flare() {
+    def light(): String = {
+      return "Flare used!"
+    }
+  }
+
+  val flare = new Flare
+  val f1 = flare.light
+  assert(f1 == "Flare used!", "Expected Flare used!, Got " + f1)
+
+
+  // add a method signal that creates a Flare object and calls the light method on the Flare object
+  val signal = testSail.signal()
+  println(signal)
+
+  assert(signal == "Flare used!", "Expected Flare used! Got " + signal)
+
+  val motorboat2 = new Motorboat
+  val flare2 = motorboat2.signal()
+  println(flare2)
+
+  assert(flare2 == "Flare used!", "Expected Flare used!, Got " + flare2)
+
 
 }
