@@ -1,4 +1,5 @@
 import org.scalatest.Assertions._
+import atomicscala.AtomicTest._
 
 object Main extends App {
 
@@ -15,7 +16,7 @@ object Main extends App {
   val ttt = 15.56
   println(ttt)
 
-  val sky = "sunny";
+  val sky = "sunny"
   val temperature = 81
 
   // Write an expression that evaluates to true
@@ -48,19 +49,19 @@ object Main extends App {
   println("Converted to Fahrenheit: " + F)
 
   def getSquare(value: Int): Int = {
-    return value * value;
+    return value * value
   }
 
-  val a = getSquare(3);
+  val a = getSquare(3)
 
   println(a);
   assert(a == 9);
 
-  val b = getSquare(6);
+  val b = getSquare(6)
   assert(b == 36);
 
-  val c = getSquare(5);
-  assert(c == 25);
+  val c = getSquare(5)
+  assert(c == 25)
 
   def isArg1GreaterThanArg2(val1: Double, val2: Double): Boolean = {
     return val1 > val2
@@ -69,7 +70,7 @@ object Main extends App {
   assert(isArg1GreaterThanArg2(4.15, 4.12))
   val t2 = isArg1GreaterThanArg2(2.1, 1.2)
 
-  assert(t2);
+  assert(t2)
 
 
   def ManyTimesString(val1: String, val2: Int): String = {
@@ -219,5 +220,53 @@ object Main extends App {
 
   assert(flare2 == "Flare used!", "Expected Flare used!, Got " + flare2)
 
+
+  class Cup {
+    var percentFull = 0
+    val max = 100
+    def add(increase: Int): Int = {
+      percentFull += increase
+      if (percentFull > max) {
+        percentFull = max
+      }
+
+      // Make sure we never go below 0
+      if (percentFull < 0) {
+        percentFull = 0
+      }
+
+      percentFull // Return this value
+    }
+
+    def get(): Int = {
+      return percentFull
+    }
+
+    def set(valToSet: Int): Unit = {
+      percentFull = valToSet
+    }
+  }
+
+  //val cup = new Cup
+  //cup.add(45) is 45 // AtomicTests included
+  //cup.add(-15) is 30
+  //cup.add(-50) is -20
+
+  // Add a code to the class to make sure the results will never go below 0
+  val cup = new Cup
+  cup.add(45) is 45
+  cup.add(-55) is 0
+  cup.add(10) is 10
+  cup.add(-9) is 1
+  cup.add(-2) is 0
+
+  // Check if we can set the value from outside the class (yes we can!!)
+  cup.percentFull = 56
+  cup.percentFull is 56
+
+  // Add methods to get and set values
+  // val cup = new Cup
+  cup.set(56)
+  cup.get() is 56
 
 }
