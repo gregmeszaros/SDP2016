@@ -10,6 +10,8 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
 
   val BLACK_VAL = "BLACK"
   val WHITE_VAL = "WHITE"
+  val SECRET_LENGTH = 4
+  val AVAILABLE_COLOURS = "BGOPRY"
 
   def apply() = {
 
@@ -22,7 +24,8 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
     println("Generating secret code ....")
 
     // Setup secret code (with the defined length)
-    this.setSecretCode(new CodeGenerator().generateCode(4))
+    // Pass the available CHARS which will be used to generate the secret code
+    this.setSecretCode(new CodeGenerator(AVAILABLE_COLOURS).generateCode(SECRET_LENGTH))
 
     // If we need to show the secret code show the secret code
     if (this.showSecretCode() == true) {
@@ -33,6 +36,7 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
 
   /**
     * Check if the guessed Character matches our secret word characters
+    *
     * @param guessedChar
     */
   def checkGuessedChar(guessedChar: Char, guessedCharIndex: Int): Unit = {
@@ -47,17 +51,11 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
     // If we have a match (check if the match is exact (black peg) or not exact (white peg)
     if (secretChar == guessedChar) {
 
-      // Value doesn't exist create
-      if (!this.getUsedChars().contains(secretCharIndex + "-" + guessedChar)) {
-        // Value doesn't exist create
-        if (secretCharIndex != guessedCharIndex) {
-          this.setResultPegs(WHITE_VAL, secretCharIndex, guessedChar)
-          if (this.getUsedChars().contains(secretCharIndex + "-" + guessedChar) && this.getUsedChars()(secretCharIndex + "-" + guessedChar) != BLACK_VAL) {
-
-          }
-        }
+      if (!this.getUsedChars().contains(secretCharIndex + "-" + secretChar)) {
+        this.setResultPegs("", secretCharIndex, secretChar)
       }
 
+      // If correct position and colour
       if (secretCharIndex == guessedCharIndex) {
         this.setResultPegs(BLACK_VAL, secretCharIndex, guessedChar)
       }
@@ -66,7 +64,35 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
           this.setResultPegs(WHITE_VAL, secretCharIndex, guessedChar)
         }
       }
+
+
+
     }
+
+      /**
+        * // Value doesn't exist create
+        * if (!this.getUsedChars().contains(secretCharIndex + "-" + guessedChar)) {
+        * // Value doesn't exist create
+        * if (secretCharIndex != guessedCharIndex) {
+        * println("white here")
+        * this.setResultPegs(WHITE_VAL, secretCharIndex, guessedChar)
+        * if (this.getUsedChars().contains(secretCharIndex + "-" + guessedChar) && this.getUsedChars()(secretCharIndex + "-" + guessedChar) != BLACK_VAL) {
+
+        * }
+        * }
+        * }
+
+        * if (secretCharIndex == guessedCharIndex) {
+        * this.setResultPegs(BLACK_VAL, secretCharIndex, guessedChar)
+        * }
+
+        * if (this.getUsedChars().contains(secretCharIndex + "-" + guessedChar) && this.getUsedChars()(secretCharIndex + "-" + guessedChar) != BLACK_VAL) {
+        * println("or white here")
+        * this.setResultPegs(WHITE_VAL, secretCharIndex, guessedChar)
+        * }
+
+        */
+
   }
 
   def play(): Boolean = {

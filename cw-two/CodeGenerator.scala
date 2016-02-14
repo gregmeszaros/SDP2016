@@ -1,7 +1,10 @@
 /**
   * Created by gergelymeszaros on 13/02/2016.
   */
-class CodeGenerator {
+class CodeGenerator(Colours: String) {
+
+  // Coming from constructor
+  private var availableColours: String = Colours
 
   // Random generator
   val random = new scala.util.Random
@@ -15,7 +18,7 @@ class CodeGenerator {
   def randomHexString(length: Int): String = {
     // Blue, Green, Orange, Purple, Red, Yellow
     // Valid colours for the pegs which will be used to generate the secret code
-    randomString("BGOPRY")(length)
+    randomString(this.availableColours)(length)
   }
 
   def generateCode(length: Int): String = {
