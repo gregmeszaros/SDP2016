@@ -79,10 +79,6 @@ abstract class GameAbstractImpl extends Game {
     return this.guess
   }
 
-  def setResultPegs(value: String, index: Int, guessedChar: Char): Unit = {
-    this.setUsedChars(index + "-" + guessedChar, value)
-  }
-
   def setUsedChars(index: String, value: String): Unit = {
     this.usedChars += (index -> value)
   }

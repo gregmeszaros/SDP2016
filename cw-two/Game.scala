@@ -1,3 +1,5 @@
+import scala.util.control.Breaks._
+
 trait Game {
   /**
     * Run a one or more game sof mastermind, until the player
@@ -34,67 +36,6 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
 
   }
 
-  /**
-    * Check if the guessed Character matches our secret word characters
-    *
-    * @param guessedChar
-    */
-  def checkGuessedChar(guessedChar: Char, guessedCharIndex: Int): Unit = {
-    //println(guessedChar + " " + index)
-    this.getSecretCode().zipWithIndex.map { case (char, index) => this.checkSecretCodeChar(char, index, guessedChar, guessedCharIndex) }
-  }
-
-  def checkSecretCodeChar(secretChar: Char, secretCharIndex: Int, guessedChar: Char, guessedCharIndex: Int): Unit = {
-
-    println (secretCharIndex + " " + secretChar + " " + guessedCharIndex + " " + guessedChar)
-
-    // If we have a match (check if the match is exact (black peg) or not exact (white peg)
-    if (secretChar == guessedChar) {
-
-      if (!this.getUsedChars().contains(secretCharIndex + "-" + secretChar)) {
-        this.setResultPegs("", secretCharIndex, secretChar)
-      }
-
-      // If correct position and colour
-      if (secretCharIndex == guessedCharIndex) {
-        this.setResultPegs(BLACK_VAL, secretCharIndex, guessedChar)
-      }
-      else {
-        if (this.getUsedChars().contains(secretCharIndex + "-" + guessedChar) && this.getUsedChars()(secretCharIndex + "-" + guessedChar) != BLACK_VAL) {
-          this.setResultPegs(WHITE_VAL, secretCharIndex, guessedChar)
-        }
-      }
-
-
-
-    }
-
-      /**
-        * // Value doesn't exist create
-        * if (!this.getUsedChars().contains(secretCharIndex + "-" + guessedChar)) {
-        * // Value doesn't exist create
-        * if (secretCharIndex != guessedCharIndex) {
-        * println("white here")
-        * this.setResultPegs(WHITE_VAL, secretCharIndex, guessedChar)
-        * if (this.getUsedChars().contains(secretCharIndex + "-" + guessedChar) && this.getUsedChars()(secretCharIndex + "-" + guessedChar) != BLACK_VAL) {
-
-        * }
-        * }
-        * }
-
-        * if (secretCharIndex == guessedCharIndex) {
-        * this.setResultPegs(BLACK_VAL, secretCharIndex, guessedChar)
-        * }
-
-        * if (this.getUsedChars().contains(secretCharIndex + "-" + guessedChar) && this.getUsedChars()(secretCharIndex + "-" + guessedChar) != BLACK_VAL) {
-        * println("or white here")
-        * this.setResultPegs(WHITE_VAL, secretCharIndex, guessedChar)
-        * }
-
-        */
-
-  }
-
   def play(): Boolean = {
 
     var counter = 0
@@ -109,9 +50,37 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
         // Prompt the user to guess a value
         this.setGuess(readLine("Enter guess: "))
 
-        // Check each character against the characters in secret code
-        this.getGuess().zipWithIndex.map { case (char, index) => this.checkGuessedChar(char, index) }
+        var pMatch = 0
+        var cMatch = 0
 
+        for ((guessChar, k) <- this.getGuess().view.zipWithIndex) {
+          if (guessChar == this.getSecretCode().charAt(k)) {
+            pMatch += 1
+          }
+        }
+
+        var tempSecretCode = this.getSecretCode()
+
+        for ((guessChar, k) <- this.getGuess().view.zipWithIndex) {
+          breakable {
+            for ((originalChar, originalK) <- tempSecretCode.view.zipWithIndex) {
+              if (guessChar ==  originalChar) {
+                cMatch += 1
+                tempSecretCode = tempSecretCode.substring(0, originalK) + tempSecretCode.substring(originalK + 1, tempSecretCode.length)
+                break
+              }
+            }
+          }
+        }
+
+        // Sets results
+        for(a <- 1 to pMatch) {
+          this.setUsedChars("B" + a.toString, BLACK_VAL)
+        }
+
+        for(a <- 1 to cMatch-pMatch) {
+          this.setUsedChars("W" + a.toString, WHITE_VAL)
+        }
 
         // Check what we guessed and save to the ArrayBuffer
         this.setPartialProgress(this.getGuess() + " Result: " + this.getResultPegs())
