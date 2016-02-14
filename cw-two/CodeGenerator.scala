@@ -23,7 +23,7 @@ class CodeGenerator(Colours: String) {
 
   def generateCode(length: Int): String = {
 
-    return "PRGP"
+    // return "PRGP"
     return randomHexString(length)
   }
 

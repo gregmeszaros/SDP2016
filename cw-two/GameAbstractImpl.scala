@@ -3,9 +3,6 @@ import scala.collection.mutable.ArrayBuffer
 abstract class GameAbstractImpl extends Game {
   private var showCode: Boolean = false
 
-  // Number of guesses to allow before loosing the game
-  private final val allowedGuesses = 120
-
   // Secret code
   private var secretCode: String = ""
 
@@ -53,15 +50,6 @@ abstract class GameAbstractImpl extends Game {
     */
   def getSecretCode(): String = {
     return this.secretCode
-  }
-
-  /**
-    * Default implementation to return the allowed guesses
-    * If needed it can be overridden in the implementing classes
-    * @return
-    */
-  def getAllowedGuesses(): Int = {
-    return this.allowedGuesses
   }
 
   /**

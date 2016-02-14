@@ -12,8 +12,9 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
 
   val BLACK_VAL = "BLACK"
   val WHITE_VAL = "WHITE"
-  val SECRET_LENGTH = 4
-  val AVAILABLE_COLOURS = "BGOPRY"
+  val SECRET_LENGTH = 4 // Secret code length + determines how many different colours the secret code can maximally have
+  val AVAILABLE_COLOURS = "BGOPRY" // Available colours when generating the secret code
+  val MAX_ALLOWED_GUESSES = 12 // Max Number of guesses to allow before loosing the game
 
   def apply() = {
 
@@ -44,7 +45,7 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
     while (this.getGuess() != this.getSecretCode()) {
 
       // If we exceeded the allowed guesses limit -> end the game
-      if (counter < this.getAllowedGuesses()) {
+      if (counter < MAX_ALLOWED_GUESSES) {
         println("What is your next guess?")
 
         // Prompt the user to guess a value
