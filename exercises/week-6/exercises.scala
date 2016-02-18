@@ -82,4 +82,50 @@ object TestArgs extends App {
   squareThem(2) is 4
   squareThem(2, 4) is 20
   squareThem(1, 2, 4) is 21
+
+  // Simple time class
+  class SimpleTime(h: Int = 0, m: Int = 0) {
+    val hours = h
+    val minutes = m
+  }
+
+  val tTime = new SimpleTime(5, 30)
+  tTime.hours is 5
+  tTime.minutes is 30
+
+  val t2 = new SimpleTime(10)
+  t2.hours is 10
+  t2.minutes is 0
+
+  class Planet(name: String = "", description: String = "", moon: Int = 1) {
+
+    def name(): String = {
+      return name
+    }
+
+    def description(): String = {
+      return description
+    }
+
+    def moon(): Int = {
+      return moon
+    }
+
+    def hasMoon(): Boolean = {
+
+      if (moon() > 0) {
+        return true
+      }
+      return false
+    }
+
+  }
+
+  val tMoon = new Planet(moon = 0, name = "Mercury", description = "small and hot planet")
+  println(tMoon.hasMoon())
+
+  // We don't need to change the code
+  val earth = new Planet(moon = 1, name = "Earth", description = "a hospitable planet")
+  earth.hasMoon is true
+
 }

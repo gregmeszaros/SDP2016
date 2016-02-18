@@ -32,3 +32,11 @@ Sunnys
 3
 20[Error] expected:
 205
+5[Error] expected:
+6
+10[Error] expected:
+30
+0[Error] expected:
+10
+false[Error] expected:
+true
