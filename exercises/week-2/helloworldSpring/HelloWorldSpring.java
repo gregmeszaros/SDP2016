@@ -33,7 +33,7 @@ public class HelloWorldSpring {
         
         // load the configuration options
         Properties props = new Properties();
-        props.load(new FileInputStream("/Library/WebServer/Documents/WORKSPACE/SDP-2016/worksheet/helloworldSpring/beans.properties"));
+        props.load(new FileInputStream("/Users/gergelymeszaros/Documents/Birkbeck/work-SDP2016/exercises/week-2/helloworldSpring/beans.properties"));
         
         rdr.registerBeanDefinitions(props);
         

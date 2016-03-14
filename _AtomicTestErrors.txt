@@ -40,3 +40,19 @@ Sunnys
 10
 false[Error] expected:
 true
+()[Error] expected:
+Vector(21, 32, 43, 54)
+()[Error] expected:
+Vector(21, 32, 43, 54)
+()[Error] expected:
+Vector(21, 32, 43, 54)
+()[Error] expected:
+Vector(21, 32, 43, 54)
+()[Error] expected:
+Vector(21, 32, 43, 54)
+()[Error] expected:
+Vector(21, 32, 43, 54)
+()[Error] expected:
+Vector(21, 32, 43, 54)
+()[Error] expected:
+Vector(21, 32, 43, 54)
