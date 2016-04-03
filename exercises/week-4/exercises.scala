@@ -269,4 +269,40 @@ object Main extends App {
   cup.set(56)
   cup.get() is 56
 
+  // Create vectors with different data
+  val stringVector = Vector("data1", "data2", "data3")
+  val IntVector = Vector(100, 200, 300)
+
+  // Test if the Vector can contain different Vectors
+  val VectorContainingVectors = Vector(stringVector, IntVector)
+
+  println(VectorContainingVectors)
+
+  val anotherStringVector = Vector("The", "dog", "visited", "the", "fire", "station")
+
+  var sentence = "";
+
+  // Loop over the vector's elements.
+  for (word <- anotherStringVector) {
+    sentence += word + " "
+  }
+
+  sentence.toString() is "The dog visited the fire station "
+
+  val intsVector = Vector(1, 5, 6, 8)
+  val doublesVector = Vector(1.2, 5.4, 3,4, 2.3)
+
+  println(intsVector.min)
+  println(intsVector.max)
+  println(intsVector.sum)
+
+  println(doublesVector.min)
+  println(doublesVector.max)
+  println(doublesVector.sum)
+
+  val myVector1 = Vector(1, 2, 3, 4, 5, 6)
+  val myVector2 = Vector(1, 2, 3, 4, 5, 6)
+
+  myVector1 is myVector2
+
 }

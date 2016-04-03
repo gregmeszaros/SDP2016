@@ -56,3 +56,9 @@ Vector(21, 32, 43, 54)
 Vector(21, 32, 43, 54)
 ()[Error] expected:
 Vector(21, 32, 43, 54)
+()[Error] expected:
+Vector(21, 32, 43, 54)
+The dog visited the fire station [Error] expected:
+The dog visited the fire station a
+Vector(1, 2, 3, 4, 5, 6)[Error] expected:
+Vector(1, 2, 3, 4, 52, 6)
