@@ -3,10 +3,15 @@ package sml;
 import com.sun.tools.corba.se.idl.constExpr.Divide;
 
 import java.io.File;
+import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.util.ArrayList;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Properties;
+import java.lang.reflect.Constructor;
+import java.lang.reflect.InvocationTargetException;
 
 /*
  * The translator of a <b>S</b><b>M</b>al<b>L</b> program.
@@ -75,52 +80,68 @@ public class Translator {
     // removed. Translate line into an instruction with label label
     // and return the instruction
     public Instruction getInstruction(String label) {
-        int s1; // Possible operands of the instruction
-        int s2;
-        int r;
-        int x;
 
-        if (line.equals(""))
-            return null;
+        int labelParam = 0;
+        int constructorParam = 1;
 
-        String ins = scan();
-        switch (ins) {
-            case "add":
-                r = scanInt();
-                s1 = scanInt();
-                s2 = scanInt();
-                return new AddInstruction(label, r, s1, s2);
-            case "sub":
-                r = scanInt();
-                s1 = scanInt();
-                s2 = scanInt();
-                return new SubInstruction(label, r, s1, s2);
-            case "lin":
-                r = scanInt();
-                s1 = scanInt();
-                return new LinInstruction(label, r, s1);
-            case "mul":
-                r = scanInt();
-                s1 = scanInt();
-                s2 = scanInt();
-                return new MultiplyInstruction(label, r, s1, s2);
-            case "div":
-                r = scanInt();
-                s1 = scanInt();
-                s2 = scanInt();
-                return new DivideInstruction(label, r, s1, s2);
-            case "bnz":
-                r = scanInt();
-                String labelToJump = scan();
-                return new BnzInstruction(label, r, labelToJump);
-            case "out":
-                r = scanInt();
-                return new OutInstruction(label, r);
+        // Setup new Properties object
+        Properties prop = new Properties();
+
+        // Scan data
+        String instData = scan();
+
+        // Start with empty instruction
+        Instruction instructionObject = null;
+
+        try {
+            FileInputStream fileStream = new FileInputStream(SRC + "/default.properties");
+            prop.load(fileStream);
+            String className = prop.getProperty(instData);
+
+            // Get the instructions based on the specified classname
+            Class<?> instructionClass = Class.forName(className);
+
+            // Array of instructions
+            Constructor<?>[] constructors = instructionClass.getConstructors();
+            Constructor<?> constructor = constructors[constructorParam];
+            Class<?>[] parameterTypes = constructors[constructorParam].getParameterTypes();
+
+            // Create object of same length as parameterTypes which will be passed to the constructor
+            Object[] objectData = new Object[parameterTypes.length];
+
+            // Label is set based on the labelParam int value
+            objectData[labelParam] = label;
+
+            for (int i = 1; i < objectData.length; i++) {
+                if (parameterTypes[i] == int.class){
+                    objectData[i] = scanInt();
+                }
+                else if (parameterTypes[i] == (Class.forName("java.lang.String"))){
+                    objectData[i] = scan();
+                }
+            }
+
+            // Instruction object
+            instructionObject = (Instruction) constructor.newInstance(objectData);
+
+        } catch (InstantiationException e) {
+            e.printStackTrace();
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+        } catch (IllegalArgumentException e) {
+            e.printStackTrace();
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+        } catch (FileNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
 
-        // You will have to write code here for the other instructions.
-
-        return null;
+        // Return the created instruction
+        return instructionObject;
     }
 
     /*
