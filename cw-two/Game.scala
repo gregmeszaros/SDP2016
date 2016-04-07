@@ -54,6 +54,14 @@ case class GamePlay(b: Boolean) extends GameAbstractImpl(b: Boolean) {
         var pMatch = 0
         var cMatch = 0
 
+        /**
+          * Validate if the guess is long/short
+          */
+        while (this.getGuess().length != this.getSecretCode().length) {
+          // Prompt the user to guess a value
+          this.setGuess(readLine("Validation error (Code too long or too short): Please enter a new guess: "))
+        }
+
         for ((guessChar, k) <- this.getGuess().view.zipWithIndex) {
           if (guessChar == this.getSecretCode().charAt(k)) {
             pMatch += 1
