@@ -1,0 +1,7 @@
+- Strategy design pattern
+-- Strategy patterns allows to select functionality on runtime. 
+-- Capture the abstraction in an interface, bury implementation details in derived classes.
+-- Only downside is that our code can and up with lot of classes especially as the project grows and it might be little bit hard to maintain.
+
+We should use strategy pattern if we have some functionality which should be interchangeable or something which has more moving parts or something which could be possibly changed in the future.
+In this case we would like to have a seperate class which is responsible for this functionality so it's much easier to make the change etc etc.
