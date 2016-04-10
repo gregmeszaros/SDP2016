@@ -3,7 +3,7 @@
 
 # Add gitignore for IDE project info files
 .idea
-*.iml
+# *.iml
 
 # Add gitignore for compiled files
 out
